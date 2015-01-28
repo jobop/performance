@@ -1,0 +1,34 @@
+<assembly xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+	<id>package</id>
+	<formats>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/classes</directory>
+			<includes>
+				<include>*.properties</include>
+			</includes>
+			<outputDirectory>/conf</outputDirectory>
+		</fileSet>
+
+		<fileSet>
+			<directory>target/classes</directory>
+			<includes>
+				<include>**/*.sh</include>
+				<include>**/*.bat</include>
+			</includes>
+			<outputDirectory>/bin</outputDirectory>
+		</fileSet>
+		
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<scope>runtime</scope>
+			<outputDirectory>/lib</outputDirectory>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+		</dependencySet>
+	</dependencySets>
+</assembly>

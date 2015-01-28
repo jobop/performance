@@ -1,0 +1,6 @@
+@echo off
+set PARAMETER=
+:loop
+if "%1"=="" (goto :END) else (SET PARAMETER=%PARAMETER% %1 &shift /1&goto :loop)
+:END
+java  -DappHome="..\conf"  -jar ..\lib\performance-${project.version}.jar %PARAMETER%
