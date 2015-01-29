@@ -64,7 +64,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.cmf.ec.performance.bootstrap.Main</mainClass>
+							<mainClass>com.github.jobop.performance.bootstrap.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
