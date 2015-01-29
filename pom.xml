@@ -8,21 +8,33 @@
 	<packaging>jar</packaging>
 
 	<name>performance</name>
-	<url>http://maven.apache.org</url>
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>Releases</name>
-			<url>http://192.168.8.159:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Snapshots</name>
-			<url>http://192.168.8.159:8081/nexus/content/repositories/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
-
+	<url>https://github.com/jobop/performance</url>
+	<description>a simple performance framework</description>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:git:git://github.com/jobop/performance.git</connection>
+		<developerConnection>scm:git:git@github.com:jobop/performance.git</developerConnection>
+		<url>https://github.com/jobop/performance</url>
+		<tag>HEAD</tag>
+	</scm>
+	<developers>
+		<developer>
+			<id>jobop</id>
+			<name>jobop</name>
+			<email>zw19860913@163.com</email>
+		</developer>
+	</developers>
 	<dependencies>
 	</dependencies>
 	<build>
