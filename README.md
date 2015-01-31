@@ -54,7 +54,7 @@ public class PerformanceTest implements PerformanceBizSpi {
     有时为了可以在性能比较高的机器中测试，我们需要使用容器方式启动。
     1、下载以下zip包，并解压。
     2、你要设置一个app目录，修改conf/config.properties中的LIB_BASE_PATH即可
-    3、你需要在app目录中新建子文件夹，把你的用例所依赖的jar包全部放到里面。
+    3、你需要在app目录中新建子文件夹，然后把你的用例所依赖的jar包全部放到里面（用例同样需要实现PerformanceBizSpi接口）。
     4、在你的子文件夹中创建spi.lst文件，文件内容即此子文件夹中所包含全部用例的全路径，每个一行，如下所示：
        com.cmf.ec.testsub.TestTradeErrorCodeSpi
        com.cmf.ec.testsub.TestSample    
