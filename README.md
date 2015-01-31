@@ -1,8 +1,12 @@
 # performance
 
-performance包括两种启动方式：嵌入式启动和容器启动
+
+## 关于performance
+performance为开发人员提供一个易于使用的性能测试工具，开发人员只需要编写少量的代码，即可很方便地测试出某个业务或者技术的各种性能指标。
+
+
 ## 嵌入式启动
- 所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
+		所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
 ```Xml
 <dependency>
     <groupId>com.github.jobop</groupId>
@@ -16,7 +20,6 @@ public class PerformanceTest implements PerformanceBizSpi {
 	public static void main(String[] args) {
 		new PerformanceTask().t(1).c(1l).l("test.log").addTest(new PerformanceTest()).start();
 	}
-
 	@Override
 	public boolean execute() {
 		System.out.println("模拟50%成功率");
@@ -24,20 +27,16 @@ public class PerformanceTest implements PerformanceBizSpi {
 
 	}
 }
-
 ```
-    其中
-
+其中
     t:持续时间，分为单位
     c:启动进程数
     l:报告输出路径
     n:被测试的类全路径，performance会根据这个全路径过滤后面addTest的用例，不指定则addTest的所用用例均会被测试
     addTest:需要增加到测试列表的用例，需要实现PerformanceBizSpi接口。
     start:开始测试
-
-
+    
 在测试完毕后，会在l指定的文件中输出报告如下：
-
     接口 com.cmf.ec.trade.webapp.test.cases.ErrorCodeSpi 第1次输出,距离上次时间间隔为:60000ms
     现在时间为:1422617565261
     本间隔执行次数为:755.00
