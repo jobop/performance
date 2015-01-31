@@ -29,12 +29,12 @@ public class PerformanceTest implements PerformanceBizSpi {
 }
 ```
 其中
-    t:持续时间，分为单位
-    c:启动进程数
-    l:报告输出路径
-    n:被测试的类全路径，performance会根据这个全路径过滤后面addTest的用例，不指定则addTest的所用用例均会被测试
-    addTest:需要增加到测试列表的用例，需要实现PerformanceBizSpi接口。
-    start:开始测试
+		t:持续时间，分为单位
+		c:启动进程数
+		l:报告输出路径
+		n:被测试的类全路径，performance会根据这个全路径过滤后面addTest的用例，不指定则addTest的所用用例均会被测试
+		addTest:需要增加到测试列表的用例，需要实现PerformanceBizSpi接口。
+		start:开始测试
     
 在测试完毕后，会在l指定的文件中输出报告如下：
     接口 com.cmf.ec.trade.webapp.test.cases.ErrorCodeSpi 第1次输出,距离上次时间间隔为:60000ms
