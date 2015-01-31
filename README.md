@@ -1,11 +1,14 @@
 # performance
 
 
+
 ## 关于performance
 performance为开发人员提供一个易于使用的性能测试工具，开发人员只需要编写少量的代码，即可很方便地测试出某个业务或者技术的各种性能指标。
 
 
+
 ## 嵌入式启动
+
 所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
 ```Xml
 <dependency>
@@ -29,14 +32,16 @@ public class PerformanceTest implements PerformanceBizSpi {
 }
 ```
 其中
+
 		t:持续时间，分为单位
 		c:启动进程数
 		l:报告输出路径
 		n:被测试的类全路径，performance会根据这个全路径过滤后面addTest的用例，不指定则addTest的所用用例均会被测试
 		addTest:需要增加到测试列表的用例，需要实现PerformanceBizSpi接口。
 		start:开始测试
-    
+
 在测试完毕后，会在l指定的文件中输出报告如下：
+
 		接口 com.cmf.ec.trade.webapp.test.cases.ErrorCodeSpi 第1次输出,距离上次时间间隔为:60000ms
 		现在时间为:1422617565261
 		本间隔执行次数为:755.00
@@ -50,8 +55,12 @@ public class PerformanceTest implements PerformanceBizSpi {
 		*******************************************************************************
 
 
+
+
 ## 容器式启动
+
 		有时为了可以在性能比较高的机器中测试，我们需要使用容器方式启动。
+
 		1、下载以下zip包，并解压。[performance-1.0.0.zip](https://github.com/jobop/release/blob/master/performance/performance-1.0.0.zip?raw=true)
 		2、你要设置一个app目录，修改conf/config.properties中的LIB_BASE_PATH即可
 		3、你需要在app目录中新建子文件夹，然后把你的用例所依赖的jar包全部放到里面（用例同样需要实现PerformanceBizSpi接口）。
