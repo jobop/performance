@@ -6,7 +6,7 @@ performance为开发人员提供一个易于使用的性能测试工具，开发
 
 
 ## 嵌入式启动
-		所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
+所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
 ```Xml
 <dependency>
     <groupId>com.github.jobop</groupId>
