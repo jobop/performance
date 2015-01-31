@@ -1,4 +1,5 @@
 # performance
+
 performance包括两种启动方式：嵌入式启动和容器启动
 ### 1、嵌入式启动
  所谓嵌入式启动，即在通过api启动，如果你使用maven，可以在pom中加入如下依赖获取performance
@@ -51,12 +52,11 @@ public class PerformanceTest implements PerformanceBizSpi {
 
 
 ### 2、容器式启动
-    有时为了可以在性能比较高的机器中测试，我们需要使用容器方式启动。
-    1、下载以下zip包，并解压。
-		  https://github.com/jobop/release/blob/master/performance/performance-1.0.0.zip?raw=true
-    2、你要设置一个app目录，修改conf/config.properties中的LIB_BASE_PATH即可
-    3、你需要在app目录中新建子文件夹，然后把你的用例所依赖的jar包全部放到里面（用例同样需要实现PerformanceBizSpi接口）。
-    4、在你的子文件夹中创建spi.lst文件，文件内容即此子文件夹中所包含全部用例的全路径，每个一行，如下所示：
-       com.cmf.ec.testsub.TestTradeErrorCodeSpi
-       com.cmf.ec.testsub.TestSample    
-    5、执行bin目录中的脚本，脚本参数与api命名相同。
+	有时为了可以在性能比较高的机器中测试，我们需要使用容器方式启动。
+		1、下载以下zip包，并解压。[performance-1.0.0.zip](https://github.com/jobop/release/blob/master/performance/performance-1.0.0.zip?raw=true)
+		2、你要设置一个app目录，修改conf/config.properties中的LIB_BASE_PATH即可
+		3、你需要在app目录中新建子文件夹，然后把你的用例所依赖的jar包全部放到里面（用例同样需要实现PerformanceBizSpi接口）。
+		4、在你的子文件夹中创建spi.lst文件，文件内容即此子文件夹中所包含全部用例的全路径，每个一行，如下所示：
+   com.cmf.ec.testsub.TestTradeErrorCodeSpi
+   com.cmf.ec.testsub.TestSample    
+		5、执行bin目录中的脚本，脚本参数与api命名相同。
