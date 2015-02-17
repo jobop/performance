@@ -5,7 +5,7 @@ import java.util.Random;
 public class TestPerformanceBizSpi implements PerformanceBizSpi {
 
 	@Override
-	public boolean execute() {
+	public boolean excute(BizContext context) {
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -13,5 +13,6 @@ public class TestPerformanceBizSpi implements PerformanceBizSpi {
 		}
 		return ((new Random().nextInt(10) % 3) == 0) ? false : true;
 	}
+
 
 }

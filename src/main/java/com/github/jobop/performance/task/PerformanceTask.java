@@ -3,7 +3,6 @@ package com.github.jobop.performance.task;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,13 +10,16 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.github.jobop.performance.spi.BizContext;
 import com.github.jobop.performance.spi.PerformanceBizSpi;
 import com.github.jobop.performance.spi.TestPerformanceBizSpi;
 import com.github.jobop.performance.spi.TestPerformanceBizSpi2;
 import com.github.jobop.performance.statistics.Counter;
+import com.github.jobop.performance.statistics.Monitor;
 import com.github.jobop.performance.statistics.Recoder;
 import com.github.jobop.performance.statistics.Timer;
 import com.github.jobop.performance.statistics.Timer.Caller;
+import com.github.jobop.performance.statistics.impl.DefaultMonitor;
 
 public class PerformanceTask {
 	private String bizName = "";
@@ -26,10 +28,19 @@ public class PerformanceTask {
 	private String logPath = "/usr/local/log/performance_recode.log";
 	// 此处装载要测试的业务
 	private List<PerformanceBizSpi> spiList = new ArrayList<PerformanceBizSpi>();
+	private List<Monitor> monitors = new ArrayList<Monitor>();
+	/**
+	 * 执行上下文
+	 */
+	private BizContext bizContext = new BizContext();
 
 	public PerformanceTask addTest(PerformanceBizSpi spi) {
 		this.spiList.add(spi);
 		return this;
+	}
+
+	public void addContext(String key, Object value) {
+		bizContext.put(key, value);
 	}
 
 	public void start() {
@@ -66,7 +77,7 @@ public class PerformanceTask {
 						long startTime = System.currentTimeMillis();
 						boolean success = false;
 						try {
-							success = spi.execute();
+							success = spi.excute(bizContext);
 						} catch (Throwable e) {
 							e.printStackTrace();
 							success = false;
@@ -131,40 +142,17 @@ public class PerformanceTask {
 		Timer timer = new Timer(new Caller() {
 
 			@Override
-			public void call(int i, long interval) {
+			public void call(int totalCall, int i, long interval) {
 				try {
-					DecimalFormat df = new DecimalFormat("######0.00");
-					double activeCount = counter.dumpChange();
-					double activeSuccessCount = counter.dumpSuccessChange();
-					double totalCount = counter.dumpTotalCount();
-					double totalSuccessCount = counter.dumpTotalSuccessCount();
-					Recoder.out.println("");
-					Recoder.out.println("接口 " + spi.getClass().getName() + " 第" + i + "次输出,距离上次时间间隔为:" + interval + "ms");
-					Recoder.out.println("现在时间为:" + System.currentTimeMillis());
-					Recoder.out.println("本间隔执行次数为:" + df.format(activeCount));
-					Recoder.out.println("总执行次数为:" + df.format(totalCount));
-					Recoder.out.println("最近一分钟平均耗时为:" + df.format(counter.dumpTimeForCurrent()) + "ms");
-					Recoder.out.println("最近一分钟平均tps为:" + df.format(activeCount / (interval / 1000)));
-					if (activeCount == 0) {
-						Recoder.out.println("最近一分钟成功率为:0.00%");
-					} else {
-						Recoder.out.println("最近一分钟成功率为:" + df.format((activeSuccessCount / activeCount) * 100) + "%");
-					}
-					Recoder.out.println("总平均耗时为:" + df.format(counter.dumpTimeForTotal()) + "ms");
-					Recoder.out.println("总平均tps为:" + df.format(totalCount / (((i * interval)) / 1000)));
-					if (totalCount == 0) {
-						Recoder.out.println("总成功率为:0.00%");
-					} else {
-						Recoder.out.println("总成功率为:" + df.format((totalSuccessCount / totalCount) * 100) + "%");
-					}
-					if (i == intervals.length) {
-						Recoder.out.println("****************************************************************************");
+					for (Monitor m : monitors) {
+						m.monitor(spi, counter, totalCall, i, interval);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				endCountDownLatch.countDown();
 			}
+
 		}, intervals);
 		timer.setDaemon(true);
 		timer.start();
@@ -226,8 +214,13 @@ public class PerformanceTask {
 		return this;
 	}
 
+	public PerformanceTask registMonitor(Monitor m) {
+		this.monitors.add(m);
+		return this;
+	}
+
 	public static void main(String[] args) {
-		new PerformanceTask().t(2).c(50l).l("D:\\recode.log").addTest(new TestPerformanceBizSpi()).addTest(new TestPerformanceBizSpi2()).start();
+		new PerformanceTask().t(2).c(50l).l("D:\\recode.log").addTest(new TestPerformanceBizSpi()).addTest(new TestPerformanceBizSpi2()).registMonitor(new DefaultMonitor()).start();
 
 	}
 }

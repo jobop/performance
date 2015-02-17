@@ -18,14 +18,14 @@ public class Timer extends Thread {
 	@Override
 	public void run() {
 		long startTime = System.currentTimeMillis();
-		int totalCall = intervals.length;
+		final int totalCall = intervals.length;
 		int i = 0;
 		while (totalCall > i) {
 			if ((System.currentTimeMillis() - startTime) >= intervals[i]) {
 				final int j = i;
 				Thread call = new Thread() {
 					public void run() {
-						caller.call(j + 1, intervals[j]);
+						caller.call(totalCall, j + 1, intervals[j]);
 					};
 				};
 				call.setDaemon(true);
@@ -38,14 +38,14 @@ public class Timer extends Thread {
 	}
 
 	public static interface Caller {
-		public void call(int i, long interval);
+		public void call(int totalCall, int i, long interval);
 	}
 
 	public static void main(String[] args) {
 		Timer timer = new Timer(new Caller() {
 
 			@Override
-			public void call(int i, long interval) {
+			public void call(int totalCall, int i, long interval) {
 				System.out.println("第" + i + "次触发时间" + System.currentTimeMillis());
 			}
 		}, new long[] { 10, 20, 30 });

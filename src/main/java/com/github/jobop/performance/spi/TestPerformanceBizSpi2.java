@@ -5,7 +5,7 @@ import java.util.Random;
 public class TestPerformanceBizSpi2 implements PerformanceBizSpi {
 
 	@Override
-	public boolean execute() {
+	public boolean excute(BizContext context) {
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
