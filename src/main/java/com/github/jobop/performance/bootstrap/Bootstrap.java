@@ -17,7 +17,7 @@ public class Bootstrap {
 	private String baseSpiPath = "/usr/local/webapp/performance";
 
 	//
-	public void run(String[] args) {
+	public void run(String[] args) { 
 
 		// 解析命令行 压测接口(不指定则按顺序全压)n 压测时长t 线程数c 报告地址l
 		PerformanceContext context = new ArgusParser().parse(args);
